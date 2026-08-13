@@ -1,0 +1,24 @@
+{
+  "name": "duochrome",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "让 Duo 常驻网页，并按时提醒你前往多邻国打卡！",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "vite build && vite build --config vite.ext.config.js --mode content && vite build --config vite.ext.config.js --mode background",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lottie-web": "^5.13.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.4.3"
+  }
+}

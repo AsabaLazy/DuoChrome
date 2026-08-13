@@ -1,0 +1,196 @@
+/* ============ DuoChrome：页面上的 Duo 与气泡 ============ */
+
+#duochrome-root {
+	/* Duolingo 品牌色（作用域限定在本扩展根节点，避免污染宿主页面） */
+	--duo-green: #58cc02;
+	--duo-green-dark: #58a700;
+	--duo-blue: #1cb0f6;
+	--duo-red: #ff4b4b;
+	--duo-orange: #ff9600;
+	--duo-purple: #ce82ff;
+	--duo-yellow: #ffc800;
+	--duo-pink: #ff86d0;
+	--background: #ffffff;
+	--surface-gray: #e5e5e5;
+	--text-primary: #4b4b4b;
+	--text-secondary: #afafaf;
+	--cta-gradient: linear-gradient(to bottom, #78e000 0%, #58cc02 100%);
+
+	--duo-size: 120px;
+	--bubble-shift-x: 0px;
+	position: fixed;
+	bottom: 0;
+	right: 16px;
+	z-index: 2147483647;
+	pointer-events: none;
+	font-family:
+		"Nunito", "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui,
+		sans-serif;
+	line-height: 1.4;
+	-webkit-font-smoothing: antialiased;
+}
+#duochrome-root[data-position="left"] {
+	right: auto;
+	left: 16px;
+}
+
+/* Duo 本体：官方 Lottie 动画，尺寸设置控制动画宽度 */
+#duochrome-root .duochrome-mascot {
+	width: min(var(--duo-size), 26vw, 26vh);
+	aspect-ratio: 645 / 486;
+	pointer-events: auto;
+	cursor: grab;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	outline: none;
+	overflow: visible;
+}
+#duochrome-root.is-dragging .duochrome-mascot {
+	cursor: grabbing;
+	filter: none;
+}
+#duochrome-root[data-appearance="path"] .duochrome-mascot {
+	aspect-ratio: 1;
+}
+#duochrome-root .duochrome-mascot:hover {
+	filter: brightness(1.06);
+}
+#duochrome-root .duochrome-mascot:focus-visible {
+	filter: drop-shadow(0 0 2px var(--duo-blue));
+}
+#duochrome-root .duochrome-lottie,
+#duochrome-root .duochrome-lottie svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+/* 摇摆动画的 1080×1080 画布留白较多，只放大内部图形，避免扩大点击区域。 */
+#duochrome-root[data-appearance="path"] .duochrome-lottie {
+	transform: translateY(14%) scale(1.85);
+	transform-origin: 50% 50%;
+}
+
+/* ---------- 气泡 ---------- */
+#duochrome-root .duochrome-bubble {
+	position: absolute;
+	bottom: calc(100% + 8px);
+	left: 50%;
+	width: 248px;
+	max-width: 60vw;
+	box-sizing: border-box;
+	padding: 14px 16px;
+	background: var(--background);
+	border: 2px solid var(--surface-gray);
+	border-radius: 16px;
+	box-shadow: 0 6px 20px rgba(75, 75, 75, 0.1);
+	opacity: 0;
+	transform: translate(calc(-50% + var(--bubble-shift-x)), 10px) scale(0.96);
+	transform-origin: 50% 100%;
+	transition:
+		opacity 0.25s ease,
+		transform 0.25s ease;
+	pointer-events: auto;
+	color: var(--text-primary);
+}
+#duochrome-root.bubble-open .duochrome-bubble {
+	opacity: 1;
+	transform: translate(calc(-50% + var(--bubble-shift-x)), 0) scale(1);
+}
+#duochrome-root[data-bubble-placement="below"] .duochrome-bubble {
+	top: calc(100% + 8px);
+	bottom: auto;
+	transform: translate(calc(-50% + var(--bubble-shift-x)), -10px)
+		scale(0.96);
+	transform-origin: 50% 0;
+}
+#duochrome-root[data-bubble-placement="below"].bubble-open .duochrome-bubble {
+	transform: translate(calc(-50% + var(--bubble-shift-x)), 0) scale(1);
+}
+/* 气泡三角尾巴（与设置页卡片相同的浅灰描边） */
+#duochrome-root .duochrome-bubble::before,
+#duochrome-root .duochrome-bubble::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: calc(50% - var(--bubble-shift-x));
+	border: 10px solid transparent;
+}
+#duochrome-root .duochrome-bubble::before {
+	margin-left: -10px;
+	border-top-color: var(--surface-gray);
+}
+#duochrome-root .duochrome-bubble::after {
+	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top-color: #fff;
+}
+#duochrome-root[data-bubble-placement="below"] .duochrome-bubble::before,
+#duochrome-root[data-bubble-placement="below"] .duochrome-bubble::after {
+	top: auto;
+	bottom: 100%;
+	border-top-color: transparent;
+}
+#duochrome-root[data-bubble-placement="below"] .duochrome-bubble::before {
+	border-bottom-color: var(--surface-gray);
+}
+#duochrome-root[data-bubble-placement="below"] .duochrome-bubble::after {
+	border-bottom-color: #fff;
+}
+
+#duochrome-root .duochrome-bubble-msg {
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-weight: 800;
+}
+#duochrome-root .duochrome-bubble-actions {
+	display: flex;
+	gap: 8px;
+}
+#duochrome-root .duochrome-bubble-actions button {
+	flex: 1;
+	border-radius: 16px;
+	padding: 12px 14px;
+	font-size: 15px;
+	font-weight: 700;
+	font-family: inherit;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	transition: filter 100ms ease;
+}
+/* 去打卡：纯绿（docs/DESIGN.md 主按钮） + 3D 按压 */
+#duochrome-root .duochrome-btn-go {
+	background: var(--duo-green);
+	color: #fff;
+	border: none;
+	border-bottom: 4px solid var(--duo-green-dark);
+}
+#duochrome-root .duochrome-btn-go:hover {
+	filter: brightness(1.06);
+}
+#duochrome-root .duochrome-btn-go:active {
+	border-bottom-color: transparent;
+	transform: translateY(4px);
+	filter: brightness(0.95);
+}
+/* 稍后提醒：白色底 + 灰边 3D 按压 */
+#duochrome-root .duochrome-btn-later {
+	background: var(--background);
+	color: var(--text-primary);
+	border: 2px solid var(--surface-gray);
+	border-bottom-width: 4px;
+}
+#duochrome-root .duochrome-btn-later:hover {
+	background: #f7f7f7;
+}
+#duochrome-root .duochrome-btn-later:active {
+	border-bottom-color: transparent;
+	transform: translateY(4px);
+	filter: brightness(0.97);
+}
+
+#duochrome-root .duochrome-bubble-actions button:focus-visible {
+	outline: 2px solid var(--duo-blue);
+	outline-offset: 2px;
+}

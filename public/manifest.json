@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "DuoChrome - 多邻国打卡提醒",
+  "short_name": "DuoChrome",
+  "version": "0.1.0",
+  "description": "让 Duo 常驻网页，并按时提醒你前往多邻国打卡！",
+  "minimum_chrome_version": "102",
+  "permissions": ["storage", "alarms", "notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["animations/*.json"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "action": {
+    "default_title": "DuoChrome（点击打开设置）",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

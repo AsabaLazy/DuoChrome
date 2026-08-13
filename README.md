@@ -1,29 +1,29 @@
 # 🦉DuoChrome
+> [中文](README_ZH.md) | English
+A browser extension that keeps Duo open on your web page and reminds you to check in on Duolingo at scheduled times.
 
-一个浏览器拓展程序，功能是让 Duo 常驻网页，并按时提醒你前往多邻国打卡。
+## Screenshots
 
-## 截图
+![Check-in Reminder](screenshot/reminder-popup.png)
+![Settings Page](screenshot/settings-page.png)
 
-![打卡提醒](screenshot/reminder-popup.png)
-![设置页面](screenshot/settings-page.png)
+## Installation
 
-## 安装
+Online Installation:
+Not available
 
-在线安装：
-暂无
+Local Installation:
+Open `edge://extensions` in Edge or `chrome://extensions` in Chrome, then simply drag and drop the downloaded `extension.zip` file into the browser to complete the installation.
 
-本地安装：
-在 Edge 浏览器中打开 `edge://extensions` 或者在 Chrome 浏览器中打开 `chrome://extensions` 界面，只需将下载的 `extension.zip` 文件拖放到浏览器中即可完成安装。
+## Why?
 
-## 为什么？
+I love Duolingo. ❤
 
-我爱多儿。❤
+## Disclaimer
 
-## 免责声明
-
-本项目为个人学习用途，与 Duolingo 公司无关。动画素材来源及权利说明见：
+This project is for personal learning purposes only and is not affiliated with Duolingo, Inc. For information on the sources and rights of the animation assets, see:
 [https://www.duolingo.cn/terms](https://)
 
-## 许可证
+## License
 
-项目代码以 [GNU GPL v3](LICENSE) 发布。
+The project code is released under the [GNU GPL v3](LICENSE).

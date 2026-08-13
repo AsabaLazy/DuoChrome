@@ -5,7 +5,6 @@
 ## 截图
 
 ![打卡提醒](screenshot/reminder-popup.png)
-![Duo](screenshot/duo-on-page.png)
 ![设置页面](screenshot/settings-page.png)
 
 ## 安装

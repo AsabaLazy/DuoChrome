@@ -1,5 +1,6 @@
 # 🦉DuoChrome
 > [中文](README_ZH.md) | English
+
 A browser extension that keeps Duo open on your web page and reminds you to check in on Duolingo at scheduled times.
 
 ## Screenshots
